@@ -1,0 +1,39 @@
+version: "3"
+services:
+  reverse_proxy:
+    image: reverse_proxy:latest
+    ports:
+    - "80:80"
+    deploy:
+      mode: global
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          memory: 500M
+    networks:
+    - webnet
+  web01:
+    image: httpdweb:latest
+    deploy:
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          memory: 800M
+    networks:
+    - webnet
+
+  web02:
+    image: httpdweb:latest
+    deploy:
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          memory: 800M
+    networks:
+    - webnet
+
+networks:
+  webnet:
